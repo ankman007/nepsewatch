@@ -11,7 +11,7 @@ def scrape_ipo_info():
         os.makedirs(FOLDER_PATH, exist_ok=True)
         file_path = os.path.join(FOLDER_PATH, IPO_INFO_FILE_NAME)
 
-        response = requests.get(IPO_INFO_URL, timeout=10)
+        response = requests.get(BASE_URL + IPO_INFO_URL, timeout=10)
         response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -47,9 +47,9 @@ def scrape_ipo_info():
         logger.exception(f"Unexpected error during scraping: {e}")
 
 
-def extract_announcement_details(link):
+def extract_announcement_details(EXTRACTION_URL):
     try:
-        response = requests.get(BASE_URL + link, timeout=10)
+        response = requests.get(BASE_URL + EXTRACTION_URL, timeout=10)
         response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
         table = soup.find("table")

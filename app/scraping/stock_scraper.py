@@ -11,7 +11,7 @@ def scrape_stock_info():
         os.makedirs(FOLDER_PATH, exist_ok=True)
         file_path = os.path.join(FOLDER_PATH, STOCK_INFO_FILE_NAME)
 
-        response = requests.get(STOCK_INFO_URL, timeout=10)
+        response = requests.get(BASE_URL + STOCK_INFO_URL, timeout=10)
         response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
 
