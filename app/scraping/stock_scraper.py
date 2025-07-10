@@ -3,18 +3,15 @@ import csv
 import requests
 from bs4 import BeautifulSoup
 from loguru import logger
-
-URL = "https://merolagani.com/LatestMarket.aspx"
-FOLDER_PATH = "data"
-FILE_NAME = "stock_info.csv"
+from app.scraping.constants import *
 
 
 def scrape_stock_info():
     try:
         os.makedirs(FOLDER_PATH, exist_ok=True)
-        file_path = os.path.join(FOLDER_PATH, FILE_NAME)
+        file_path = os.path.join(FOLDER_PATH, STOCK_INFO_FILE_NAME)
 
-        response = requests.get(URL, timeout=10)
+        response = requests.get(STOCK_INFO_URL, timeout=10)
         response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -45,7 +42,3 @@ def scrape_stock_info():
         logger.exception(f"Network error occurred: {e}")
     except Exception as e:
         logger.exception(f"Unexpected error during scraping: {e}")
-
-
-if __name__ == "__main__":
-    scrape_stock_info()
